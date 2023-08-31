@@ -10,6 +10,12 @@
 
 如果上述链接无法访问或加载，可以尝试[这个链接](http://146.56.248.15/games/pacman/)。注意，这个链接可能会失效。
 
+## skpacman-gym
+
+目前正在尝试将此项目修改为适配[openai 的 gym 项目](https://gymnasium.farama.org/)的接口规范，并计划在将来使用强化学习进行训练学习。
+
+如果你对这个计划感兴趣，请移步至[skpacman-gym](https://github.com/CN-Shopkeeper/skpacman-gym)。
+
 ## 关于服务器
 
 排行榜后端服务器可能会随时失效(取决于何时被发现 🙏🙏🙏)，[后端项目地址](https://github.com/CN-Shopkeeper/games-server)。
@@ -59,6 +65,39 @@ Crystal
 M-thor
 TX7
 Lynn00
+```
+
+## 本地编译运行
+
+需要为 Cmake 配置 SDL 与 SDL_TTF 的依赖位置，下面两种方式二选一。
+
+- 使用 vscode 的 cmake 插件
+
+  ```json
+  // .vscode/settings.json
+  {
+    "cmake.configureArgs": [
+      "-DSDL2_ROOT=<your SDL path>",
+      "-DSDL2_TTF_ROOT=<your SDL_TTF path>"
+    ]
+  }
+  ```
+
+- 或直接从命令行开始
+
+  ```shell
+  cmake -S . -B cmake-build -DSDL2_ROOT=<your SDL path> -DSDL2_TTF_ROOT=<your SDL_TTF path>
+  cmake --build cmake-build
+  ```
+
+## WASM
+
+```shell
+emcmake cmake -S . -B wasm-build
+```
+
+```shell
+cmake --build wasm-build
 ```
 
 ## 算法依据
@@ -136,13 +175,3 @@ Lynn00
 - ~~Ghost 速度调整~~
 - ~~剩余时间奖励~~
 - ~~三条命~~
-
-## WASM
-
-```shell
-emcmake cmake -S . -B wasm-build
-```
-
-```shell
-cmake --build wasm-build
-```
