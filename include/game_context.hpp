@@ -95,17 +95,17 @@ class GameContext final : public Singlton<GameContext> {
     }
 
     void UpdateRankingListText() {
+        rankingListText.reset(Context::GetInstance().GenerateTextTexture(
+            RankingList::GetInstance().ToString()));
+    }
+
+    void UpdateIdText() {
         auto& ctx = Context::GetInstance();
         rankingListText.reset(ctx.GenerateTextTexture(
             "Your ID is:\n(" +
             std::to_string(ctx.playerIdHandler.GetContent().length()) +
             "/10)\n" + ctx.playerIdHandler.GetContent() +
             "\nEsc to Cancel\nEnter to Confirm"));
-    }
-
-    void UpdateIdText() {
-        rankingListText.reset(Context::GetInstance().GenerateTextTexture(
-            RankingList::GetInstance().ToString()));
     }
 
     void TryEasterEgg();
