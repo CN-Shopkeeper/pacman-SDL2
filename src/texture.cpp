@@ -20,6 +20,7 @@ Texture::Texture(Renderer* renderer, const std::string& filename,
             SDL_MapRGB(surface->format, keyColor.r, keyColor.g, keyColor.b));
         texture_.reset(
             SDL_CreateTextureFromSurface(renderer->renderer_.get(), surface));
+        SDL_FreeSurface(surface);
         if (!texture_) {
             SDL_Log("[Texture]: create texture from %s failed: %s",
                     filename.c_str(), SDL_GetError());
@@ -70,12 +71,9 @@ Tilesheet* TextureManager::FindTilesheet(const std::string& name) {
 }
 
 Image::Image(Texture& texture)
-    : texture_(texture), rect_({0, 0}, texture.GetSize()) {
-}
+    : texture_(texture), rect_({0, 0}, texture.GetSize()) {}
 
-Image::Image(Texture& texture, Rect rect)
-    : texture_(texture), rect_(rect) {
-}
+Image::Image(Texture& texture, Rect rect) : texture_(texture), rect_(rect) {}
 
 Tilesheet::Tilesheet(Texture& texture, int col, int row)
     : texture_(texture),

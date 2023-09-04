@@ -17,6 +17,8 @@ class GameContext final : public Singlton<GameContext> {
     bool Won = false, GameIsOver = false;
     std::unique_ptr<TextTexture> gameInfoText;
     std::unique_ptr<TextTexture> debugText;
+    std::unique_ptr<TextTexture> rankingListText;
+    std::unique_ptr<TextTexture> idText;
     Texture* winImage;
     Texture* gameoverImage;
     // 游戏正常运行的时间
@@ -42,7 +44,7 @@ class GameContext final : public Singlton<GameContext> {
             }
             if (SDL_SCANCODE_G == key) {
                 // ! 移除Debug模式
-                // DebugMode = !DebugMode;
+                DebugMode = !DebugMode;
             }
             if (SDL_SCANCODE_M == key) {
                 if (DebugMode) {
@@ -90,6 +92,20 @@ class GameContext final : public Singlton<GameContext> {
             "\nMultiKill Reward: " + std::to_string(multiKillReward_) +
             "\nGhost mode:\n" + ghost->GetModeStr() + "\nRandom Seed:\n" +
             std::to_string(Tetris::randSeed)));
+    }
+
+    void UpdateRankingListText() {
+        auto& ctx = Context::GetInstance();
+        rankingListText.reset(ctx.GenerateTextTexture(
+            "Your ID is:\n(" +
+            std::to_string(ctx.playerIdHandler.GetContent().length()) +
+            "/10)\n" + ctx.playerIdHandler.GetContent() +
+            "\nEsc to Cancel\nEnter to Confirm"));
+    }
+
+    void UpdateIdText() {
+        rankingListText.reset(Context::GetInstance().GenerateTextTexture(
+            RankingList::GetInstance().ToString()));
     }
 
     void TryEasterEgg();

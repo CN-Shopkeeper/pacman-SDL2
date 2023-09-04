@@ -15,3 +15,7 @@ build/*
 wasm-build/*
 
 .vscode/*
+
+out/
+CMakeSettings.json
+.vs

@@ -59,17 +59,13 @@ void Draw() {
     }
     // 绘制用户ID
     if (ctx.playerIdHandler.canInput) {
-        auto text = ctx.GenerateTextTexture(
-            "Your ID is:\n(" +
-            std::to_string(ctx.playerIdHandler.GetContent().length()) +
-            "/10)\n" + ctx.playerIdHandler.GetContent() +
-            "\nEsc to Cancel\nEnter to Confirm");
-        renderer.DrawTextTexture(*text, TileSize * MapWidth, textHeightOffset);
+        gameCtx.UpdateIdText();
+        renderer.DrawTextTexture(*gameCtx.idText, TileSize * MapWidth, textHeightOffset);
     }
     // 绘制排行榜
-    auto text = ctx.GenerateTextTexture(RankingList::GetInstance().ToString());
+    gameCtx.UpdateRankingListText();
+    renderer.DrawTextTexture(*gameCtx.rankingListText, TileSize * MapWidth + TipsWidth, 0);
 
-    renderer.DrawTextTexture(*text, TileSize * MapWidth + TipsWidth, 0);
     //  绘制彩蛋
     for (auto& easterEgg : gameCtx.easterEggInfo) {
         if (easterEgg.show) {
